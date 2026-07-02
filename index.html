@@ -1,0 +1,897 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Autobook — The 24/7 AI receptionist for HVAC</title>
+<meta name="description" content="Autobook answers every call and text in seconds, qualifies the job, and books it straight to your calendar — 24/7. Stop sending HVAC customers to voicemail." />
+<meta name="theme-color" content="#FBF9F4" />
+
+<meta property="og:type" content="website" />
+<meta property="og:title" content="Autobook — Stop sending your customers to voicemail" />
+<meta property="og:description" content="A 24/7 AI receptionist for small HVAC shops. Answers calls and texts in seconds, qualifies the job, and books it straight to your calendar." />
+<meta name="twitter:card" content="summary" />
+
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23FBF9F4'/%3E%3Crect x='1.5' y='1.5' width='61' height='61' rx='12.5' fill='none' stroke='%231C1A16' stroke-opacity='.16'/%3E%3Cpath d='M32 13c4 9-2.5 11-2.5 16.5 0 2.2 1.7 3.7 3.7 3.7 1.6 0 2.7-.9 3.3-2.2C39 33.5 40 36 40 38.5A8 8 0 0 1 24 38.5c0-5.5 4-8 4.8-12.5.6-3.4-.2-6.7 3.2-13z' fill='%23BE4A22'/%3E%3C/svg%3E" />
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,460;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,460;1,9..144,600&family=Hanken+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet" />
+
+<style>
+  :root{
+    --paper:#FBF9F4;         /* warm near-white */
+    --paper-2:#F3EFE5;       /* cards / alternating panels */
+    --paper-3:#EDE8DC;       /* device screens, deeper panels */
+    --ink:#1C1A16;           /* deep warm near-black */
+    --ink-2:#3B372F;         /* secondary ink */
+    --muted:#6E675B;         /* warm gray, body-secondary */
+    --line:rgba(28,26,22,.13);
+    --line-2:rgba(28,26,22,.26);
+    --ember:#BE4A22;         /* the single accent — used sparingly */
+    --ember-deep:#9E3714;
+    --paper-line:rgba(251,249,244,.16); /* hairlines on ink spreads */
+    --paper-muted:rgba(251,249,244,.66);
+    --font-display:'Fraunces',Georgia,'Times New Roman',serif;
+    --font-body:'Hanken Grotesk',-apple-system,BlinkMacSystemFont,sans-serif;
+    --container:1140px;
+    --ease:cubic-bezier(.22,.65,.18,1);
+  }
+
+  *,*::before,*::after{box-sizing:border-box;}
+  html{-webkit-text-size-adjust:100%;scroll-behavior:smooth;}
+  body{
+    margin:0;
+    background-color:var(--paper);
+    color:var(--ink);
+    font-family:var(--font-body);
+    font-size:17.5px;
+    line-height:1.62;
+    font-weight:400;
+    -webkit-font-smoothing:antialiased;
+    text-rendering:optimizeLegibility;
+    overflow-x:hidden;
+  }
+
+  img{max-width:100%;display:block;}
+  a{color:inherit;text-decoration:none;}
+  h1,h2,h3{margin:0;font-family:var(--font-display);font-optical-sizing:auto;font-weight:460;line-height:1.02;letter-spacing:-.018em;}
+  p{margin:0;}
+  ul{margin:0;padding:0;list-style:none;}
+  em{font-style:italic;}
+  ::selection{background:var(--ink);color:var(--paper);}
+
+  .container{width:min(90%,var(--container));margin-inline:auto;}
+  section{padding:clamp(80px,11vw,150px) 0;position:relative;}
+  .rule{border-top:1px solid var(--line);}
+
+  /* Editorial eyebrow: index number + hairline + tracked label */
+  .eyebrow{
+    display:inline-flex;align-items:center;gap:14px;
+    font-family:var(--font-body);font-size:.75rem;font-weight:600;
+    letter-spacing:.24em;text-transform:uppercase;color:var(--muted);
+  }
+  .eyebrow .no{color:var(--ember);font-weight:700;font-variant-numeric:tabular-nums;}
+  .eyebrow::after{content:"";width:34px;height:1px;background:var(--line-2);}
+  .eyebrow.center{justify-content:center;}
+  .eyebrow.center::before{content:"";width:34px;height:1px;background:var(--line-2);}
+  .eyebrow.center::after{width:34px;}
+
+  /* Serif emphasis + hand-set underline mark for the one accent word */
+  .em-i{font-style:italic;font-weight:460;}
+  .mark{position:relative;white-space:nowrap;font-style:italic;font-weight:500;}
+  .mark::after{content:"";position:absolute;left:.02em;right:.02em;bottom:.02em;height:.075em;
+    background:var(--ember);border-radius:3px;transform-origin:left;}
+
+  /* Buttons */
+  .btn{
+    --bg:var(--ink);--fg:var(--paper);--bd:var(--ink);
+    display:inline-flex;align-items:center;justify-content:center;gap:.6em;
+    font-family:var(--font-body);font-weight:600;font-size:.98rem;letter-spacing:.005em;
+    padding:.92em 1.55em;border-radius:3px;cursor:pointer;
+    background:var(--bg);color:var(--fg);border:1px solid var(--bd);
+    transition:background .25s var(--ease),color .25s var(--ease),border-color .25s var(--ease),transform .25s var(--ease);
+    white-space:nowrap;
+  }
+  .btn .arr{transition:transform .28s var(--ease);}
+  .btn:hover .arr{transform:translateX(4px);}
+  .btn:focus-visible{outline:2px solid var(--ember);outline-offset:3px;}
+  .btn-primary:hover{--bg:var(--ember);--bd:var(--ember);transform:translateY(-1px);}
+  .btn-line{--bg:transparent;--fg:var(--ink);--bd:var(--line-2);}
+  .btn-line:hover{--bd:var(--ink);transform:translateY(-1px);}
+  .btn-invert{--bg:var(--paper);--fg:var(--ink);--bd:var(--paper);}
+  .btn-invert:hover{--bg:var(--ember);--fg:var(--paper);--bd:var(--ember);transform:translateY(-1px);}
+  .btn-lg{font-size:1.06rem;padding:1.05em 1.9em;}
+
+  .ulink{display:inline-flex;align-items:center;gap:.45em;color:var(--ink);font-weight:600;
+    border-bottom:1px solid var(--line-2);padding-bottom:2px;transition:color .2s,border-color .2s;}
+  .ulink:hover{color:var(--ember);border-color:var(--ember);}
+  .ulink .arr,.ulink .arr-d{transition:transform .28s var(--ease);}
+  .ulink:hover .arr{transform:translateX(4px);}
+  .ulink:hover .arr-d{transform:translateY(3px);}
+
+  /* Header */
+  header.site{position:sticky;top:0;z-index:100;background:rgba(251,249,244,.82);
+    backdrop-filter:saturate(120%) blur(10px);-webkit-backdrop-filter:saturate(120%) blur(10px);
+    border-bottom:1px solid var(--line);}
+  .nav{display:flex;align-items:center;justify-content:space-between;height:70px;}
+  .brand{display:flex;align-items:center;gap:10px;font-family:var(--font-display);font-weight:600;
+    font-size:1.32rem;letter-spacing:-.01em;color:var(--ink);}
+  .brand .mark-i{width:22px;height:22px;flex:0 0 auto;}
+  .nav-right{display:flex;align-items:center;gap:22px;}
+  .nav-note{display:none;color:var(--muted);font-size:.9rem;font-weight:500;font-style:italic;font-family:var(--font-display);}
+  .nav .btn{padding:.58em 1.15em;font-size:.9rem;}
+
+  /* Reveal motion */
+  .reveal{opacity:0;transform:translateY(16px);transition:opacity .85s var(--ease),transform .85s var(--ease);transition-delay:var(--d,0s);}
+  .reveal.in{opacity:1;transform:none;}
+
+  /* HERO */
+  .hero{padding-top:clamp(52px,7vw,96px);}
+  .hero-grid{display:grid;grid-template-columns:1fr;gap:clamp(52px,6vw,72px);align-items:center;}
+  .hero h1{font-size:clamp(3rem,7.4vw,6rem);color:var(--ink);max-width:15ch;margin-top:30px;letter-spacing:-.028em;}
+  .hero .sub{font-size:clamp(1.12rem,1.6vw,1.32rem);color:var(--muted);margin-top:28px;max-width:44ch;line-height:1.55;}
+  .hero-actions{display:flex;flex-wrap:wrap;gap:16px 22px;margin-top:38px;align-items:center;}
+  .trust{display:flex;flex-wrap:wrap;gap:12px 28px;margin-top:44px;padding-top:26px;border-top:1px solid var(--line);}
+  .trust span{display:inline-flex;align-items:center;gap:9px;font-size:.92rem;color:var(--muted);font-weight:500;}
+  .trust svg{flex:0 0 auto;color:var(--ember);}
+
+  .hero-visual{position:relative;display:flex;justify-content:center;}
+  /* Editorial "job ticket" pinned to the page */
+  .ticket{position:relative;width:100%;max-width:392px;background:var(--paper);
+    border:1px solid var(--line-2);border-radius:6px;padding:26px 26px 20px;
+    box-shadow:0 26px 50px -28px rgba(28,26,22,.45),0 2px 0 var(--line);
+    transform:rotate(-1.4deg);}
+  .ticket::before{content:"FIG. 01";position:absolute;top:-11px;left:24px;background:var(--paper);
+    padding:0 8px;font-size:.62rem;font-weight:700;letter-spacing:.22em;color:var(--muted);}
+  .tk-top{display:flex;align-items:center;gap:11px;padding-bottom:16px;border-bottom:1px solid var(--line);}
+  .tk-check{width:30px;height:30px;flex:0 0 auto;}
+  .tk-check .ring{opacity:.35;}
+  .tk-check .ck{stroke-dasharray:1;stroke-dashoffset:1;}
+  .hero-visual.in .tk-check .ck{animation:drawCheck .75s var(--ease) .5s forwards;}
+  .tk-status{font-family:var(--font-body);font-weight:700;text-transform:uppercase;letter-spacing:.2em;
+    font-size:.72rem;color:var(--ember);}
+  .tk-live{margin-left:auto;display:inline-flex;align-items:center;gap:7px;font-size:.64rem;font-weight:600;
+    letter-spacing:.2em;text-transform:uppercase;color:var(--muted);}
+  .tk-live .dot{width:6px;height:6px;border-radius:50%;background:var(--ember);}
+  .tk-name{font-family:var(--font-display);font-weight:500;font-size:1.72rem;color:var(--ink);margin-top:18px;line-height:1.05;}
+  .tk-service{margin-top:7px;color:var(--muted);font-size:.96rem;display:flex;align-items:center;gap:9px;flex-wrap:wrap;}
+  .tk-service .sep{opacity:.5;}
+  .tk-emergency{font-weight:600;font-size:.68rem;text-transform:uppercase;letter-spacing:.09em;color:var(--ember);
+    border:1px solid var(--ember);border-radius:3px;padding:2px 7px;}
+  .tk-rows{margin-top:20px;display:grid;gap:12px;}
+  .tk-row{display:flex;align-items:center;gap:12px;color:var(--ink-2);font-size:.98rem;}
+  .tk-row svg{flex:0 0 auto;color:var(--muted);}
+  .tk-foot{margin-top:18px;padding-top:14px;border-top:1px solid var(--line);color:var(--muted);font-size:.82rem;
+    font-style:italic;font-family:var(--font-display);line-height:1.5;}
+  .tk-foot b{color:var(--ember);font-weight:600;font-style:normal;font-family:var(--font-body);}
+
+  /* PROBLEM */
+  .pullquote{font-family:var(--font-display);font-weight:460;letter-spacing:-.02em;
+    font-size:clamp(2rem,4.7vw,3.7rem);line-height:1.08;max-width:19ch;margin-top:30px;color:var(--ink);}
+  .pullquote .dim{color:var(--muted);}
+  .problem-body{font-size:clamp(1.08rem,1.4vw,1.24rem);color:var(--muted);max-width:60ch;margin-top:32px;line-height:1.6;}
+  .problem-body strong{color:var(--ink);font-weight:600;}
+  .stats{display:grid;grid-template-columns:1fr;gap:0;margin-top:clamp(52px,6vw,88px);border-top:1px solid var(--line);}
+  .stat{padding:clamp(34px,4vw,52px) 0;border-bottom:1px solid var(--line);}
+  .stat .num{font-family:var(--font-display);font-weight:420;color:var(--ink);
+    font-size:clamp(4rem,13vw,9rem);line-height:.86;letter-spacing:-.03em;font-variant-numeric:lining-nums;}
+  .stat .num .small{font-size:.4em;color:var(--ember);vertical-align:.44em;font-weight:500;}
+  .stat .lbl{margin-top:20px;color:var(--muted);font-size:clamp(1rem,1.3vw,1.16rem);max-width:36ch;}
+  .stat .lbl b{color:var(--ink);font-weight:600;}
+  .problem-close{font-family:var(--font-display);font-weight:500;font-size:clamp(1.6rem,3vw,2.5rem);
+    margin-top:clamp(44px,5vw,68px);letter-spacing:-.02em;color:var(--ink);}
+  .problem-close .heat{font-style:italic;color:var(--ember);}
+
+  /* HOW IT WORKS */
+  .sec-head{display:grid;grid-template-columns:1fr;gap:18px;align-items:end;}
+  .sec-head h2{font-size:clamp(2.1rem,4.5vw,3.5rem);max-width:17ch;color:var(--ink);margin-top:22px;}
+  .sec-head .sec-sub{color:var(--muted);max-width:40ch;font-size:1.08rem;}
+  .steps{display:grid;grid-template-columns:1fr;margin-top:clamp(48px,5vw,74px);border-top:1px solid var(--line);}
+  .step{display:grid;grid-template-columns:auto 1fr;gap:clamp(22px,4vw,54px);align-items:start;
+    padding:clamp(32px,3.6vw,48px) 0;border-bottom:1px solid var(--line);transition:background .3s var(--ease);}
+  .step:hover{background:linear-gradient(90deg,var(--paper-2),transparent 62%);}
+  .step .sidx{font-family:var(--font-display);font-weight:400;font-size:clamp(2.6rem,5vw,4.2rem);
+    line-height:.9;color:var(--ember);letter-spacing:-.02em;}
+  .step h3{font-size:clamp(1.35rem,2.1vw,1.8rem);color:var(--ink);font-weight:500;}
+  .step p{margin-top:12px;color:var(--muted);font-size:1.06rem;max-width:52ch;}
+
+  /* CONVERSATION */
+  .convo-wrap{display:grid;grid-template-columns:1fr;gap:clamp(48px,6vw,74px);align-items:center;margin-top:clamp(42px,4vw,58px);}
+  .convo-copy h2{font-size:clamp(2.1rem,4.3vw,3.3rem);color:var(--ink);max-width:16ch;margin-top:22px;}
+  .live-pill{display:inline-flex;align-items:center;gap:10px;font-size:.74rem;font-weight:700;letter-spacing:.2em;
+    text-transform:uppercase;color:var(--muted);}
+  .live-pill .dot{width:8px;height:8px;border-radius:50%;background:var(--ember);box-shadow:0 0 0 0 rgba(190,74,34,.5);animation:pulse 2.2s infinite;}
+  .points{margin-top:32px;display:grid;gap:22px;}
+  .point{display:flex;gap:15px;align-items:flex-start;}
+  .point .pi{flex:0 0 auto;margin-top:3px;color:var(--ember);}
+  .point b{color:var(--ink);font-weight:600;}
+  .point span{color:var(--muted);}
+  .convo-cta{margin-top:36px;}
+
+  /* Phone — a real device presented as a plate on the page */
+  .phone-stage{display:flex;flex-direction:column;align-items:center;position:relative;}
+  .phone{position:relative;width:336px;max-width:86vw;background:linear-gradient(158deg,#2a2620,#141210 66%);
+    border-radius:52px;padding:12px;box-shadow:0 40px 70px -30px rgba(28,26,22,.6),0 0 0 1px rgba(0,0,0,.2);}
+  .screen{position:relative;background:var(--paper-3);border-radius:41px;overflow:hidden;height:596px;
+    display:flex;flex-direction:column;}
+  /* Screen sleeps until scrolled into view — wakes both directions */
+  .power{position:absolute;inset:0;z-index:9;background:#0D0C0A;opacity:1;pointer-events:none;
+    transition:opacity .65s var(--ease);}
+  .phone.awake .power{opacity:0;}
+  .screen > :not(.power):not(.island){opacity:.25;transform:scale(.985);
+    transition:opacity .5s var(--ease) .12s,transform .6s var(--ease) .12s;}
+  .phone.awake .screen > :not(.power):not(.island){opacity:1;transform:none;}
+  .island{position:absolute;top:13px;left:50%;transform:translateX(-50%);width:100px;height:29px;background:#141210;border-radius:16px;z-index:5;}
+  .statusbar{display:flex;align-items:center;justify-content:space-between;padding:15px 26px 8px;
+    font-size:.8rem;font-weight:600;color:var(--ink);}
+  .statusbar .sb-icons{display:flex;align-items:center;gap:6px;color:var(--ink);opacity:.85;}
+  .chat-top{display:flex;align-items:center;gap:12px;padding:9px 18px 13px;border-bottom:1px solid rgba(28,26,22,.1);background:rgba(255,255,255,.35);}
+  .chat-top .av{width:38px;height:38px;border-radius:50%;flex:0 0 auto;display:grid;place-items:center;background:var(--ink);color:var(--paper);}
+  .chat-top .who{font-weight:700;color:var(--ink);font-size:.98rem;line-height:1.15;display:flex;align-items:center;gap:8px;}
+  .chat-top .who .on{width:6px;height:6px;border-radius:50%;background:var(--ember);}
+  .chat-top .who small{display:block;font-weight:500;color:var(--muted);font-size:.76rem;margin-top:1px;}
+  .chat-top .back{color:var(--muted);margin-right:-4px;}
+  .chat-top .info{margin-left:auto;color:var(--muted);}
+
+  .thread{flex:1;overflow-y:auto;padding:18px 14px 10px;display:flex;flex-direction:column;gap:9px;
+    scrollbar-width:none;list-style:none;margin:0;}
+  .thread::-webkit-scrollbar{display:none;}
+  .thread .stamp{align-self:center;font-size:.7rem;color:var(--muted);font-weight:600;letter-spacing:.05em;margin:2px 0 10px;}
+  .thread .stamp b{color:var(--ink);font-weight:600;}
+  .msg{display:flex;max-width:80%;}
+  .msg.customer{align-self:flex-end;justify-content:flex-end;}
+  .msg.autobook{align-self:flex-start;justify-content:flex-start;}
+  .bubble{padding:10px 14px;border-radius:18px;font-size:.9rem;line-height:1.42;
+    opacity:0;transform:translateY(9px) scale(.98);transition:opacity .3s var(--ease),transform .3s var(--ease);word-wrap:break-word;}
+  .msg.shown .bubble{opacity:1;transform:none;}
+  .msg.customer .bubble{background:var(--ink);color:var(--paper);border-bottom-right-radius:6px;font-weight:500;}
+  .msg.autobook .bubble{background:#fff;color:var(--ink);border-bottom-left-radius:6px;border:1px solid var(--line);box-shadow:0 1px 2px rgba(28,26,22,.08);}
+  .bubble.dots{display:inline-flex;gap:5px;align-items:center;padding:13px 15px;}
+  .bubble.dots span{width:6px;height:6px;border-radius:50%;background:currentColor;opacity:.45;display:inline-block;animation:blink 1.3s infinite both;}
+  .msg.customer .bubble.dots span{background:var(--paper);}
+  .msg.autobook .bubble.dots span{background:var(--ink);}
+  .bubble.dots span:nth-child(2){animation-delay:.16s;}
+  .bubble.dots span:nth-child(3){animation-delay:.32s;}
+  .typing .bubble{opacity:1;transform:none;}
+  .bubble a{color:var(--ember);font-weight:600;text-decoration:underline;text-underline-offset:2px;}
+  /* Quick-reply chips */
+  .chips{display:flex;gap:8px;padding:9px 14px 0;overflow-x:auto;scrollbar-width:none;}
+  .chips::-webkit-scrollbar{display:none;}
+  .chips:empty{display:none;}
+  .chip{flex:0 0 auto;appearance:none;font-family:var(--font-body);font-size:.8rem;font-weight:600;
+    color:var(--ink);background:#fff;border:1px solid var(--line-2);border-radius:999px;padding:7px 13px;
+    cursor:pointer;transition:border-color .2s,color .2s,transform .2s var(--ease);}
+  .chip:hover{border-color:var(--ink);transform:translateY(-1px);}
+  .chip.alt{color:var(--ember);border-color:var(--ember);}
+  .chip.alt:hover{border-color:var(--ember-deep);color:var(--ember-deep);}
+  .chat-dock{border-top:1px solid rgba(28,26,22,.1);background:rgba(255,255,255,.35);}
+  .chat-input{display:flex;align-items:center;gap:10px;padding:11px 14px 18px;background:transparent;}
+  .chat-input .field{flex:1;height:38px;min-width:0;border-radius:999px;background:#fff;border:1px solid var(--line);
+    padding:0 15px;font-family:var(--font-body);font-size:16px;color:var(--ink);outline:none;transition:border-color .2s;}
+  .chat-input .field::placeholder{color:var(--muted);}
+  .chat-input .field:focus{border-color:var(--ink);}
+  .chat-input .send{appearance:none;border:0;width:38px;height:38px;border-radius:50%;flex:0 0 auto;
+    display:grid;place-items:center;background:var(--ember);color:var(--paper);cursor:pointer;
+    transition:background .2s,transform .2s var(--ease);}
+  .chat-input .send:hover{background:var(--ember-deep);transform:scale(1.06);}
+  .plate-cap{margin-top:18px;text-align:center;font-family:var(--font-display);font-style:italic;font-size:.92rem;color:var(--muted);}
+
+  /* TRY band — the single dark spread, for rhythm */
+  .try{background:var(--ink);color:var(--paper);text-align:center;}
+  .try .container{position:relative;}
+  .try .eyebrow{color:var(--paper-muted);}
+  .try .eyebrow .no{color:var(--ember);}
+  .try .eyebrow::before,.try .eyebrow::after{background:var(--paper-line);}
+  .try h2{font-size:clamp(2.2rem,5vw,3.9rem);color:var(--paper);max-width:18ch;margin:24px auto 0;font-weight:460;}
+  .try p{font-size:clamp(1.1rem,1.6vw,1.34rem);color:var(--paper-muted);margin:22px auto 0;max-width:46ch;line-height:1.5;}
+  .try p .num{color:var(--paper);font-weight:600;white-space:nowrap;font-family:var(--font-display);font-style:italic;}
+  .try .btn{margin-top:38px;}
+  .try .note{margin-top:18px;color:var(--paper-muted);font-size:.94rem;}
+
+  /* WHY / features */
+  .feat-grid{display:grid;grid-template-columns:1fr;gap:0;margin-top:clamp(48px,5vw,74px);
+    border-top:1px solid var(--line);border-left:1px solid var(--line);}
+  .feat{border-right:1px solid var(--line);border-bottom:1px solid var(--line);
+    padding:clamp(30px,3vw,42px) clamp(26px,2.6vw,38px);position:relative;transition:background .3s var(--ease);}
+  .feat:hover{background:var(--paper-2);}
+  .feat .fi{color:var(--ember);margin-bottom:20px;height:24px;display:flex;align-items:center;}
+  .feat h3{font-size:1.32rem;color:var(--ink);font-weight:500;}
+  .feat p{margin-top:10px;color:var(--muted);font-size:1.02rem;line-height:1.55;}
+  .feat .ix{position:absolute;top:clamp(30px,3vw,42px);right:clamp(26px,2.6vw,38px);
+    font-family:var(--font-display);font-weight:400;color:var(--line-2);font-size:1.2rem;font-variant-numeric:tabular-nums;}
+
+  /* FINAL */
+  .final .inner{max-width:760px;}
+  .final h2{font-size:clamp(2.5rem,5.4vw,4.4rem);color:var(--ink);max-width:15ch;margin-top:24px;font-weight:460;letter-spacing:-.025em;}
+  .final p{color:var(--muted);font-size:clamp(1.1rem,1.5vw,1.28rem);margin-top:24px;max-width:48ch;line-height:1.55;}
+  .final-actions{display:flex;flex-wrap:wrap;gap:16px 26px;align-items:center;margin-top:40px;}
+  .final-actions .em{color:var(--muted);font-size:1rem;}
+  .final-actions .em a{color:var(--ink);font-weight:600;border-bottom:1px solid var(--line-2);transition:color .2s,border-color .2s;}
+  .final-actions .em a:hover{color:var(--ember);border-color:var(--ember);}
+
+  /* FOOTER */
+  footer.site{border-top:1px solid var(--line);padding:60px 0 46px;background:var(--paper-2);}
+  .foot-grid{display:flex;flex-wrap:wrap;justify-content:space-between;gap:30px;align-items:flex-start;}
+  .foot-brand{display:flex;align-items:center;gap:10px;font-family:var(--font-display);font-weight:600;font-size:1.32rem;color:var(--ink);}
+  .foot-tag{margin-top:15px;color:var(--muted);max-width:36ch;font-size:.98rem;}
+  .foot-right a{color:var(--ink);font-weight:600;font-size:1.02rem;border-bottom:1px solid var(--line-2);transition:color .2s,border-color .2s;}
+  .foot-right a:hover{color:var(--ember);border-color:var(--ember);}
+  .foot-bottom{margin-top:46px;padding-top:22px;border-top:1px solid var(--line);display:flex;flex-wrap:wrap;
+    justify-content:space-between;gap:12px;font-size:.84rem;color:var(--muted);}
+  .foot-bottom .it{font-family:var(--font-display);font-style:italic;}
+  .foot-legal a{color:var(--muted);border-bottom:1px solid var(--line-2);transition:color .2s,border-color .2s;}
+  .foot-legal a:hover{color:var(--ember);border-color:var(--ember);}
+
+  /* keyframes */
+  @keyframes pulse{0%{box-shadow:0 0 0 0 rgba(190,74,34,.45);}70%{box-shadow:0 0 0 8px rgba(190,74,34,0);}100%{box-shadow:0 0 0 0 rgba(190,74,34,0);}}
+  @keyframes blink{0%,80%,100%{opacity:.3;transform:translateY(0);}40%{opacity:1;transform:translateY(-2px);}}
+  @keyframes drawCheck{to{stroke-dashoffset:0;}}
+
+  /* Responsive */
+  @media (min-width:680px){
+    .nav-note{display:inline;}
+    .stats{grid-template-columns:1fr 1fr;column-gap:clamp(40px,6vw,90px);}
+    .stats .stat:first-child{border-right:1px solid var(--line);padding-right:clamp(40px,6vw,90px);}
+    .feat-grid{grid-template-columns:1fr 1fr;}
+    .sec-head{grid-template-columns:1.5fr 1fr;}
+  }
+  @media (min-width:960px){
+    .hero-grid{grid-template-columns:1.04fr .96fr;}
+    .convo-wrap{grid-template-columns:1fr 1fr;}
+    .feat-grid{grid-template-columns:repeat(3,1fr);}
+    .step{grid-template-columns:110px 1fr;}
+  }
+
+  @media (prefers-reduced-motion:reduce){
+    html{scroll-behavior:auto;}
+    .reveal{opacity:1;transform:none;transition:none;}
+    .bubble{opacity:1;transform:none;transition:none;}
+    .tk-check .ck{stroke-dashoffset:0 !important;}
+    *{animation:none !important;}
+  }
+</style>
+<noscript><style>.reveal{opacity:1 !important;transform:none !important;}.tk-check .ck{stroke-dashoffset:0;}</style></noscript>
+</head>
+<body id="top">
+<script>
+/* Land at the top on plain loads — stop the browser restoring a stale scroll
+   offset from session history. Hash links (#conversation etc.) still work. */
+(function(){
+  if(location.hash) return;
+  if('scrollRestoration' in history) history.scrollRestoration='manual';
+  function toTop(){ try{ window.scrollTo({top:0,left:0,behavior:'instant'}); }catch(e){ window.scrollTo(0,0); } }
+  toTop();
+  window.addEventListener('load', toTop);
+})();
+</script>
+
+<header class="site">
+  <div class="container nav">
+    <a class="brand" href="#top" aria-label="Autobook home">
+      <svg class="mark-i" viewBox="0 0 24 24" fill="#BE4A22" aria-hidden="true"><path d="M12 2c1.6 4.5-1 5.5-1 8.2 0 1.1.85 1.85 1.85 1.85.8 0 1.35-.45 1.65-1.1C16 13.2 16.5 14.7 16.5 16A4.5 4.5 0 0 1 7.5 16c0-2.7 2-4 2.4-6.2.3-1.7-.1-3.4 2.1-7.8z"/></svg>
+      Autobook
+    </a>
+    <div class="nav-right">
+      <span class="nav-note">Losing jobs to voicemail?</span>
+      <a class="btn btn-primary" href="#book">Book a demo</a>
+    </div>
+  </div>
+</header>
+
+<main>
+
+  <!-- 1. HERO -->
+  <section class="hero">
+    <div class="container hero-grid">
+      <div class="hero-copy">
+        <span class="eyebrow reveal"><span class="no">24/7</span> AI receptionist for HVAC</span>
+        <h1 class="reveal" style="--d:.08s">Stop sending your customers to <span class="mark">voicemail.</span></h1>
+        <p class="sub reveal" style="--d:.16s">Autobook answers every call and text in seconds, qualifies the job, and books it straight to your calendar — 24/7, even when you're on a roof.</p>
+        <div class="hero-actions reveal" style="--d:.24s">
+          <a class="btn btn-primary btn-lg" href="#conversation">See it live <span class="arr" aria-hidden="true">→</span></a>
+          <a class="ulink" href="#conversation">Watch it book a job <span class="arr-d" aria-hidden="true">↓</span></a>
+        </div>
+        <div class="trust reveal" style="--d:.32s" aria-label="What Autobook does">
+          <span><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg> Replies in ~8 seconds</span>
+          <span><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3a7 7 0 0 0-7 7c0 5 7 11 7 11s7-6 7-11a7 7 0 0 0-7-7z"/><circle cx="12" cy="10" r="2.3"/></svg> After-hours and weekends</span>
+          <span><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 9h18M8 3v4M16 3v4M9 14l2 2 4-4"/></svg> Books to your calendar</span>
+        </div>
+      </div>
+      <div class="hero-visual reveal" style="--d:.2s">
+        <div class="ticket">
+          <div class="tk-top">
+            <svg class="tk-check" viewBox="0 0 36 36" fill="none" aria-hidden="true">
+              <circle class="ring" cx="18" cy="18" r="16" stroke="#BE4A22" stroke-width="2"></circle>
+              <path class="ck" pathLength="1" d="M11 18.5l4.6 4.6L25.5 13" stroke="#BE4A22" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"></path>
+            </svg>
+            <span class="tk-status">Booked</span>
+            <span class="tk-live"><span class="dot" aria-hidden="true"></span> Live</span>
+          </div>
+          <div class="tk-name">Adam Rivera</div>
+          <div class="tk-service">AC Repair <span class="sep" aria-hidden="true">·</span> <span class="tk-emergency">Emergency</span></div>
+          <div class="tk-rows">
+            <div class="tk-row">
+              <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="2"></rect><path d="M3 9h18M8 3v4M16 3v4"></path></svg>
+              Friday, 5:00 PM
+            </div>
+            <div class="tk-row">
+              <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21s7-5.7 7-11a7 7 0 0 0-14 0c0 5.3 7 11 7 11z"></path><circle cx="12" cy="10" r="2.5"></circle></svg>
+              123 Newbury St, Boston
+            </div>
+          </div>
+          <div class="tk-foot">Booked by <b>Autobook</b> — 9:48 PM, while you were on a job.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 2. THE PROBLEM -->
+  <section class="problem rule" id="problem">
+    <div class="container">
+      <span class="eyebrow reveal"><span class="no">01</span> The problem</span>
+      <p class="pullquote reveal" style="--d:.06s">Your phone rang at 9 PM. You were on a job. Your customer <span class="dim">called the next guy.</span></p>
+      <p class="problem-body reveal" style="--d:.12s">When no one is at a desk, calls go to voicemail — and most callers never leave one. Small HVAC shops miss anywhere from <strong>27% to 62%</strong> of inbound calls. Each missed call can be a <strong>$350 to $12,000</strong> job walking straight to a competitor.</p>
+      <div class="stats">
+        <div class="stat reveal">
+          <div class="num">27&ndash;62<span class="small">%</span></div>
+          <div class="lbl">of inbound calls go <b>unanswered</b> at small, owner-run HVAC shops.</div>
+        </div>
+        <div class="stat reveal" style="--d:.1s">
+          <div class="num"><span class="small">$</span>12,000</div>
+          <div class="lbl">a single missed job can be worth <b>$350 to $12,000</b> — gone to whoever picks up first.</div>
+        </div>
+      </div>
+      <p class="problem-close reveal">Autobook catches <span class="heat">every one.</span></p>
+    </div>
+  </section>
+
+  <!-- 3. HOW IT WORKS -->
+  <section class="how rule" id="how">
+    <div class="container">
+      <div class="sec-head">
+        <div>
+          <span class="eyebrow reveal"><span class="no">02</span> How it works</span>
+          <h2 class="reveal" style="--d:.06s">From missed call to booked job, automatically.</h2>
+        </div>
+        <p class="sec-sub reveal" style="--d:.12s">No new hardware, no app for your customers. They just call or text the number you already use.</p>
+      </div>
+      <div class="steps">
+        <div class="step reveal">
+          <div class="sidx">01</div>
+          <div>
+            <h3>Your customer reaches out</h3>
+            <p>They call or text your number. Autobook answers in seconds — day, night, weekend, or holiday — so no one hits voicemail.</p>
+          </div>
+        </div>
+        <div class="step reveal" style="--d:.08s">
+          <div class="sidx">02</div>
+          <div>
+            <h3>Autobook qualifies the job</h3>
+            <p>It greets them, gets the name, service address, and how urgent the job is, and works out what the visit needs — in plain conversation, not a phone tree.</p>
+          </div>
+        </div>
+        <div class="step reveal" style="--d:.16s">
+          <div class="sidx">03</div>
+          <div>
+            <h3>The job lands on your calendar</h3>
+            <p>Autobook checks your real availability, books an open slot, and confirms by text. You wake up to a fuller schedule, not a list of missed calls.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 4. SEE A REAL CONVERSATION -->
+  <section class="convo rule" id="conversation">
+    <div class="container">
+      <div class="convo-wrap">
+        <div class="convo-copy">
+          <span class="live-pill reveal"><span class="dot" aria-hidden="true"></span> Live demo</span>
+          <h2 class="reveal" style="--d:.06s">Watch it handle an after-hours text.</h2>
+          <div class="points">
+            <div class="point reveal" style="--d:.12s">
+              <span class="pi" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span>
+              <span><b>Calm under pressure.</b> A 9:48 PM panic text gets a steady, reassuring reply in seconds.</span>
+            </div>
+            <div class="point reveal" style="--d:.18s">
+              <span class="pi" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span>
+              <span><b>Captures what matters.</b> Name, address, and urgency — without sounding like a form.</span>
+            </div>
+            <div class="point reveal" style="--d:.24s">
+              <span class="pi" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span>
+              <span><b>Books against your real calendar.</b> When 4 PM is taken, it offers the times you actually have open.</span>
+            </div>
+          </div>
+          <div class="convo-cta reveal" style="--d:.3s">
+            <a class="ulink" href="#try">Text it yourself <span class="arr" aria-hidden="true">→</span></a>
+          </div>
+        </div>
+
+        <div class="phone-stage reveal" style="--d:.1s">
+          <div class="phone" id="demo-phone">
+            <div class="screen">
+              <div class="island" aria-hidden="true"></div>
+              <div class="statusbar">
+                <span>9:48 PM</span>
+                <span class="sb-icons" aria-hidden="true">
+                  <svg width="17" height="11" viewBox="0 0 18 12" fill="currentColor"><rect x="0" y="7" width="3" height="5" rx="1"/><rect x="5" y="4" width="3" height="8" rx="1"/><rect x="10" y="1.5" width="3" height="10.5" rx="1" opacity=".45"/><rect x="15" y="0" width="3" height="12" rx="1" opacity=".45"/></svg>
+                  <svg width="16" height="12" viewBox="0 0 16 12" fill="currentColor"><path d="M8 2.4c2.3 0 4.4.9 6 2.4l1.4-1.5A11 11 0 0 0 8 .2 11 11 0 0 0 .6 3.3L2 4.8A8.6 8.6 0 0 1 8 2.4z"/><path d="M8 6c1.3 0 2.5.5 3.4 1.4l1.4-1.5A8 8 0 0 0 8 3.6a8 8 0 0 0-4.8 2.3l1.4 1.5A5 5 0 0 1 8 6z" opacity=".55"/><circle cx="8" cy="10" r="1.6"/></svg>
+                  <svg width="26" height="12" viewBox="0 0 26 12" fill="none"><rect x="1" y="1.5" width="21" height="9" rx="2.5" stroke="currentColor" opacity=".5"/><rect x="3" y="3.4" width="15" height="5.2" rx="1.3" fill="currentColor"/><rect x="23.5" y="4" width="1.8" height="4" rx="1" fill="currentColor" opacity=".5"/></svg>
+                </span>
+              </div>
+              <div class="chat-top">
+                <span class="back" aria-hidden="true"><svg width="11" height="18" viewBox="0 0 12 20" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M10 2 2 10l8 8"/></svg></span>
+                <span class="av" aria-hidden="true"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></span>
+                <span class="who">Autobook <span class="on" aria-hidden="true"></span><small>AI receptionist · online</small></span>
+                <span class="info" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 11v5M12 8h.01"/></svg></span>
+              </div>
+              <ul class="thread" id="thread" aria-live="off"></ul>
+              <div class="chat-dock">
+                <div class="chips" id="chips" role="group" aria-label="Quick replies"></div>
+                <form class="chat-input" id="chatform" autocomplete="off">
+                  <input class="field" id="chatfield" type="text" placeholder="Text Autobook…" maxlength="120" aria-label="Type a message to the demo receptionist" />
+                  <button class="send" type="submit" aria-label="Send message"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
+                </form>
+              </div>
+              <div class="power" aria-hidden="true"></div>
+            </div>
+          </div>
+          <p class="plate-cap">Go ahead — type in it. The demo talks back.</p>
+        </div>
+      </div>
+      <noscript>
+        <div style="margin-top:30px;max-width:60ch;color:var(--muted);">
+          <p style="color:var(--ink);font-weight:700;margin-bottom:10px;">9:48 PM</p>
+          <p><b>Customer:</b> My AC just died and it's brutal in here</p>
+          <p><b>Autobook:</b> So sorry to hear that — you're in good hands, we'll take care of it. Can I grab your name?</p>
+          <p><b>Customer:</b> Adam Rivera</p>
+          <p><b>Autobook:</b> Thanks Adam. What's the service address?</p>
+          <p><b>Customer:</b> 123 Newbury St, Boston</p>
+          <p><b>Autobook:</b> Got it. Do you need someone out urgently, or can it wait for a convenient time?</p>
+          <p><b>Customer:</b> Tomorrow's fine</p>
+          <p><b>Autobook:</b> Perfect — what day works best?</p>
+          <p><b>Customer:</b> Friday</p>
+          <p><b>Autobook:</b> And what time would you like Friday?</p>
+          <p><b>Customer:</b> 4 PM</p>
+          <p><b>Autobook:</b> 4 PM just got booked — but I have 3 PM or 5 PM open. Which works?</p>
+          <p><b>Customer:</b> 5 PM</p>
+          <p><b>Autobook:</b> You're all set, Adam — booked for Friday at 5 PM. You'll get a reminder text before we arrive.</p>
+        </div>
+      </noscript>
+    </div>
+  </section>
+
+  <!-- 5. LIVE DEMO CTA — the dark spread -->
+  <section class="try" id="try">
+    <div class="container">
+      <span class="eyebrow center reveal">Try it now</span>
+      <h2 class="reveal" style="--d:.06s">See it answer a phone right now.</h2>
+      <p class="reveal" style="--d:.12s">Text DEMO to <span class="num">(617) 295-7190</span> and watch it book an appointment in under a minute.</p>
+      <a class="btn btn-invert btn-lg reveal" style="--d:.18s" href="sms:+16172957190?&body=DEMO">Text DEMO to (617) 295-7190</a>
+      <p class="note reveal" style="--d:.24s">No download, no signup — just a text.</p>
+    </div>
+  </section>
+
+  <!-- 6. WHY AUTOBOOK -->
+  <section class="why rule" id="why">
+    <div class="container">
+      <div class="sec-head">
+        <div>
+          <span class="eyebrow reveal"><span class="no">03</span> Why Autobook</span>
+          <h2 class="reveal" style="--d:.06s">Built for shops that are never at a desk.</h2>
+        </div>
+        <p class="sec-sub reveal" style="--d:.12s">Every feature earns its place by turning a missed call into a booked job.</p>
+      </div>
+      <div class="feat-grid">
+        <div class="feat reveal">
+          <span class="ix">01</span>
+          <div class="fi" aria-hidden="true"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg></div>
+          <h3>Always on</h3>
+          <p>Answers every call and text 24/7 — nights, weekends, and holidays — with no answering service and no extra staff on payroll.</p>
+        </div>
+        <div class="feat reveal" style="--d:.06s">
+          <span class="ix">02</span>
+          <div class="fi" aria-hidden="true"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2 4 14h7l-1 8 9-12h-7z"/></svg></div>
+          <h3>Answers in ~8 seconds</h3>
+          <p>Replies in about eight seconds — before a frustrated caller has time to scroll down and dial the next contractor.</p>
+        </div>
+        <div class="feat reveal" style="--d:.12s">
+          <span class="ix">03</span>
+          <div class="fi" aria-hidden="true"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3 5 6v5c0 4.5 3 8 7 10 4-2 7-5.5 7-10V6z"/><path d="m9 12 2 2 4-4"/></svg></div>
+          <h3>Handles emergencies</h3>
+          <p>Recognizes a no-heat or no-cool emergency, treats it as urgent, and gets the details you need before you've even seen the message.</p>
+        </div>
+        <div class="feat reveal">
+          <span class="ix">04</span>
+          <div class="fi" aria-hidden="true"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 9h18M8 3v4M16 3v4M9 14l2 2 4-4"/></svg></div>
+          <h3>Books to your calendar</h3>
+          <p>Reads your real availability and offers only open slots, then writes the confirmed job back — so you never wake up to a double-booking.</p>
+        </div>
+        <div class="feat reveal" style="--d:.06s">
+          <span class="ix">05</span>
+          <div class="fi" aria-hidden="true"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a4 4 0 0 0-5.4 5.4L3 18l3 3 6.3-6.3a4 4 0 0 0 5.4-5.4l-2.6 2.6-2-2z"/></svg></div>
+          <h3>Works while you work</h3>
+          <p>Covers the phone while you're on a roof or brazing a line, so a ringing phone never forces you to choose between the job and the lead.</p>
+        </div>
+        <div class="feat reveal" style="--d:.12s">
+          <span class="ix">06</span>
+          <div class="fi" aria-hidden="true"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16v12H5.2L4 17.2z"/><path d="M8 9h8M8 12h5"/></svg></div>
+          <h3>Calls and texts both</h3>
+          <p>Meets customers where they reach out — a phone call or a late-night text gets the same fast, capable response.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 7. FINAL CTA -->
+  <section class="final rule" id="book">
+    <div class="container">
+      <div class="inner">
+        <span class="eyebrow reveal"><span class="no">04</span> Get started</span>
+        <h2 class="reveal" style="--d:.06s">Book a 10-minute demo.</h2>
+        <p class="reveal" style="--d:.12s">See exactly how Autobook would answer your calls and fill your calendar. Bring a real after-hours scenario and watch it book the job.</p>
+        <div class="final-actions reveal" style="--d:.18s">
+          <a class="btn btn-primary btn-lg" href="mailto:tryautobook@gmail.com?subject=Autobook%20demo">Get a 10-minute demo</a>
+          <span class="em">Or email <a href="mailto:tryautobook@gmail.com">tryautobook@gmail.com</a></span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="site">
+  <div class="container">
+    <div class="foot-grid">
+      <div>
+        <div class="foot-brand">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="#BE4A22" aria-hidden="true"><path d="M12 2c1.6 4.5-1 5.5-1 8.2 0 1.1.85 1.85 1.85 1.85.8 0 1.35-.45 1.65-1.1C16 13.2 16.5 14.7 16.5 16A4.5 4.5 0 0 1 7.5 16c0-2.7 2-4 2.4-6.2.3-1.7-.1-3.4 2.1-7.8z"/></svg>
+          Autobook
+        </div>
+        <p class="foot-tag">The 24/7 AI receptionist for residential HVAC. Never send another customer to voicemail.</p>
+      </div>
+      <div class="foot-right">
+        <a href="mailto:tryautobook@gmail.com">tryautobook@gmail.com</a>
+      </div>
+    </div>
+    <div class="foot-bottom">
+      <span>© 2026 Autobook. All rights reserved.</span>
+      <span class="foot-legal"><a href="privacy.html">Privacy Policy</a> · <a href="terms.html">Terms &amp; Conditions</a></span>
+      <span class="it">Stop losing jobs to missed calls.</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+(function(){
+  var thread = document.getElementById('thread');
+  var phone  = document.getElementById('demo-phone');
+  var chipsEl= document.getElementById('chips');
+  var form   = document.getElementById('chatform');
+  var field  = document.getElementById('chatfield');
+  var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* Scroll + load reveals */
+  var revealEls = document.querySelectorAll('.reveal');
+  if(reduce || !('IntersectionObserver' in window)){
+    revealEls.forEach(function(el){ el.classList.add('in'); });
+  } else {
+    var rio = new IntersectionObserver(function(entries){
+      entries.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add('in'); rio.unobserve(e.target); } });
+    }, {threshold:0.12, rootMargin:'0px 0px -7% 0px'});
+    revealEls.forEach(function(el){ rio.observe(el); });
+  }
+
+  /* ============ Demo phone ============ */
+  if(!thread || !phone) return;
+
+  /* Attract-mode script (plays until the visitor takes over) */
+  var MOVIE = [
+    {role:'customer', text:"My AC just died and it's brutal in here"},
+    {role:'autobook', text:"So sorry to hear that — you're in good hands, we'll take care of it. Can I grab your name?"},
+    {role:'customer', text:"Adam Rivera"},
+    {role:'autobook', text:"Thanks Adam. What's the service address?"},
+    {role:'customer', text:"123 Newbury St, Boston"},
+    {role:'autobook', text:"Got it. Do you need someone out urgently, or can it wait for a convenient time?"},
+    {role:'customer', text:"Tomorrow's fine"},
+    {role:'autobook', text:"Perfect — what day works best?"},
+    {role:'customer', text:"Friday"},
+    {role:'autobook', text:"And what time would you like Friday?"},
+    {role:'customer', text:"4 PM"},
+    {role:'autobook', text:"4 PM just got booked — but I have 3 PM or 5 PM open. Which works?"},
+    {role:'customer', text:"5 PM"},
+    {role:'autobook', text:"You're all set, Adam — booked for Friday at 5 PM. You'll get a reminder text before we arrive."}
+  ];
+
+  var wait = function(ms){ return new Promise(function(r){ setTimeout(r, reduce?0:ms); }); };
+  function stampEl(){ var li=document.createElement('li'); li.className='stamp'; li.innerHTML='Text Message · <b>9:48 PM</b>'; return li; }
+  function bubbleEl(role, text){
+    var li=document.createElement('li'); li.className='msg '+role;
+    var b=document.createElement('div'); b.className='bubble'; b.textContent=text;
+    li.appendChild(b); return li;
+  }
+  function typingEl(role){
+    var li=document.createElement('li'); li.className='msg '+role+' typing';
+    var b=document.createElement('div'); b.className='bubble dots';
+    b.innerHTML='<span></span><span></span><span></span>'; li.appendChild(b); return li;
+  }
+  function toBottom(){ thread.scrollTop = thread.scrollHeight; }
+  function show(li){ thread.appendChild(li); toBottom(); void li.offsetWidth; li.classList.add('shown');
+    setTimeout(toBottom, 340); /* re-pin after the bubble's entrance transition settles */ }
+
+  var mode='movie';      /* 'movie' (attract loop) | 'live' (visitor-driven) */
+  var movieToken=0;      /* bump to cancel a running movie */
+  var awake=false, busy=false;
+  var slots={}, state='opening';
+
+  /* ---- quick-reply chips ---- */
+  function setChips(items){
+    chipsEl.innerHTML='';
+    (items||[]).forEach(function(it){
+      var label = it.label || it, el;
+      if(it.href){
+        el=document.createElement('a'); el.href=it.href; el.className='chip alt'; el.textContent=label;
+      } else {
+        el=document.createElement('button'); el.type='button'; el.className='chip'; el.textContent=label;
+        el.addEventListener('click', function(){ send(label); });
+      }
+      chipsEl.appendChild(el);
+    });
+    toBottom(); /* chips change the thread height — keep the latest message pinned */
+  }
+
+  /* ---- attract loop ---- */
+  async function startMovie(){
+    var t=++movieToken;
+    while(t===movieToken){
+      thread.innerHTML=''; thread.appendChild(stampEl());
+      await wait(650); if(t!==movieToken) return;
+      for(var i=0;i<MOVIE.length;i++){
+        var m=MOVIE[i];
+        var tp=typingEl(m.role); thread.appendChild(tp); toBottom();
+        await wait(Math.min(1500, Math.max(620, m.text.length*20)));
+        if(t!==movieToken){ tp.remove(); return; }
+        tp.remove();
+        show(bubbleEl(m.role,m.text));
+        await wait(m.role==='customer'?640:840);
+        if(t!==movieToken) return;
+      }
+      await wait(4000);
+    }
+  }
+  function stopMovie(){ movieToken++; }
+
+  /* ---- scroll-driven power: screen wakes coming into view, sleeps leaving (both directions).
+         In live mode sleeping preserves the visitor's conversation. ---- */
+  function wakeUp(){
+    if(awake) return; awake=true; phone.classList.add('awake');
+    if(mode==='movie') startMovie();
+  }
+  function powerOff(){
+    if(!awake) return; awake=false; phone.classList.remove('awake');
+    if(mode==='movie') stopMovie();
+  }
+
+  if(reduce){
+    phone.classList.add('awake'); awake=true;
+    thread.appendChild(stampEl());
+    MOVIE.forEach(function(m){ var li=bubbleEl(m.role,m.text); li.classList.add('shown'); thread.appendChild(li); });
+    toBottom();
+  } else if('IntersectionObserver' in window){
+    var pio=new IntersectionObserver(function(entries){
+      entries.forEach(function(e){
+        if(e.isIntersecting && e.intersectionRatio>=0.3){ wakeUp(); } else { powerOff(); }
+      });
+    },{threshold:[0,.3,.6]});
+    pio.observe(phone);
+  } else {
+    phone.classList.add('awake'); awake=true; startMovie();
+  }
+
+  /* ---- live conversation ---- */
+  var URGENT=/urgent|emergen|no heat|no cool|no a\/?c|died|dead|broke|leak|smoke|gas|asap|right now|tonight|freez|boil|brutal/i;
+  function capWords(s){ return s.replace(/\S+/g, function(w){ return w.charAt(0).toUpperCase()+w.slice(1); }); }
+  function firstName(s){ return capWords(s.trim()).split(/\s+/)[0]; }
+  function parseTime(s){
+    var m=s.match(/(\d{1,2})(?::(\d{2}))?\s*(a\.?m\.?|p\.?m\.?)?/i);
+    if(!m) return null;
+    var h=parseInt(m[1],10); if(!(h>=1&&h<=12)) return null;
+    var min=m[2]?(':'+m[2]):'';
+    var mer=m[3] ? (m[3].charAt(0).toLowerCase()==='a'?'AM':'PM') : (h>=8&&h<=11?'AM':'PM');
+    return {h:h,min:min,mer:mer};
+  }
+  function fmt(t){ return t.h+t.min+' '+t.mer; }
+  function shiftHour(t,d){ var h=t.h+d; if(h<1)h+=12; if(h>12)h-=12; return {h:h,min:t.min,mer:t.mer}; }
+
+  async function botSay(text, html){
+    var tp=typingEl('autobook'); thread.appendChild(tp); toBottom();
+    await wait(Math.min(1400, Math.max(520, text.length*16)));
+    tp.remove();
+    var li=bubbleEl('autobook', text);
+    if(html){ li.querySelector('.bubble').innerHTML=html; }
+    show(li);
+    await wait(160);
+  }
+  function userSay(text){ show(bubbleEl('customer', text)); }
+
+  var END_CHIPS=[{label:'Start over'},{label:'Text the real demo',href:'sms:+16172957190?&body=DEMO'}];
+
+  async function restart(){
+    slots={}; state='opening';
+    thread.innerHTML=''; thread.appendChild(stampEl());
+    await botSay("Hi, Autobook here — what's going on with your heating or cooling?");
+    setChips(["My AC just died","No heat upstairs","Just need maintenance"]);
+  }
+
+  async function handle(text){
+    busy=true; setChips([]);
+    if(state==='opening'){
+      slots.urgent=URGENT.test(text);
+      if(slots.urgent){ await botSay("So sorry to hear that — you're in good hands, we'll take care of it. Can I grab your name?"); }
+      else { await botSay("Happy to help with that. Can I grab your name?"); }
+      state='name'; setChips(['Adam Rivera']);
+    } else if(state==='name'){
+      slots.name=firstName(text);
+      await botSay("Thanks "+slots.name+". What's the service address?");
+      state='address'; setChips(['123 Newbury St, Boston']);
+    } else if(state==='address'){
+      slots.address=text;
+      await botSay("Got it. Do you need someone out urgently, or can it wait for a convenient time?");
+      state='urgency'; setChips(["It's urgent","Tomorrow's fine"]);
+    } else if(state==='urgency'){
+      if(/urgent|now|asap|yes|emergen|tonight/i.test(text)){
+        slots.urgent=true;
+        await botSay("Understood — I've marked this as an emergency and alerted the on-call tech. Let's get you the next opening. What day works best?");
+      } else {
+        await botSay("Perfect — what day works best?");
+      }
+      state='day'; setChips(['Tomorrow','Friday','Saturday']);
+    } else if(state==='day'){
+      slots.day=capWords(text.trim());
+      await botSay("And what time works on "+slots.day+"?");
+      state='time'; setChips(['9 AM','1 PM','4 PM']);
+    } else if(state==='time'){
+      var t=parseTime(text);
+      var want=t?fmt(t):text.trim();
+      var a=t?fmt(shiftHour(t,-1)):'3 PM';
+      var b=t?fmt(shiftHour(t,1)):'5 PM';
+      await botSay(want+" just got booked — but I have "+a+" or "+b+" open. Which works?");
+      state='pick'; setChips([a,b]);
+    } else if(state==='pick'){
+      var t2=parseTime(text);
+      slots.time=t2?fmt(t2):text.trim();
+      await botSay("You're all set, "+(slots.name||'friend')+" — booked for "+(slots.day||'that day')+" at "+slots.time+". You'll get a reminder text before we arrive.");
+      await botSay("That's the whole flow — under a minute. Want the real thing? Text DEMO to (617) 295-7190.",
+        'That’s the whole flow — under a minute. Want the real thing? Text <a href="sms:+16172957190?&body=DEMO">DEMO to (617) 295‑7190</a>.');
+      state='done'; setChips(END_CHIPS);
+    } else { /* done */
+      if(/start|again|restart|over/i.test(text)){ await restart(); }
+      else {
+        await botSay("This run is wrapped — tap “Start over” to go again, or text DEMO to (617) 295-7190 for the real thing.");
+        setChips(END_CHIPS);
+      }
+    }
+    busy=false;
+  }
+
+  function send(text){
+    text=(text||'').trim();
+    if(!text || busy) return;
+    if(mode!=='live'){
+      mode='live'; stopMovie();
+      thread.setAttribute('aria-live','polite');
+      thread.innerHTML=''; thread.appendChild(stampEl());
+    }
+    userSay(text);
+    field.value='';
+    handle(text);
+  }
+
+  if(form){
+    form.addEventListener('submit', function(e){ e.preventDefault(); send(field.value); });
+  }
+})();
+</script>
+</body>
+</html>

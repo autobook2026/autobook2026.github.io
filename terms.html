@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Terms and Conditions — Autobook</title>
+<meta name="description" content="Terms and Conditions for Autobook, the SMS appointment booking service for HVAC contractors." />
+<meta name="theme-color" content="#FBF9F4" />
+<meta name="robots" content="index,follow" />
+
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23FBF9F4'/%3E%3Crect x='1.5' y='1.5' width='61' height='61' rx='12.5' fill='none' stroke='%231C1A16' stroke-opacity='.16'/%3E%3Cpath d='M32 13c4 9-2.5 11-2.5 16.5 0 2.2 1.7 3.7 3.7 3.7 1.6 0 2.7-.9 3.3-2.2C39 33.5 40 36 40 38.5A8 8 0 0 1 24 38.5c0-5.5 4-8 4.8-12.5.6-3.4-.2-6.7 3.2-13z' fill='%23BE4A22'/%3E%3C/svg%3E" />
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,460;0,9..144,500;0,9..144,600;1,9..144,460&family=Hanken+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet" />
+
+<style>
+  :root{
+    --paper:#FBF9F4; --paper-2:#F3EFE5; --ink:#1C1A16; --ink-2:#3B372F; --muted:#6E675B;
+    --line:rgba(28,26,22,.13); --line-2:rgba(28,26,22,.26);
+    --ember:#BE4A22; --ember-deep:#9E3714;
+    --font-display:'Fraunces',Georgia,serif; --font-body:'Hanken Grotesk',-apple-system,sans-serif;
+  }
+  *,*::before,*::after{box-sizing:border-box;}
+  body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--font-body);
+    font-size:17px;line-height:1.65;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;}
+  a{color:var(--ember);text-decoration:none;border-bottom:1px solid rgba(190,74,34,.35);transition:border-color .2s,color .2s;}
+  a:hover{color:var(--ember-deep);border-color:var(--ember-deep);}
+  header.site{position:sticky;top:0;background:rgba(251,249,244,.88);backdrop-filter:blur(10px);
+    -webkit-backdrop-filter:blur(10px);border-bottom:1px solid var(--line);z-index:10;}
+  .nav{max-width:760px;margin-inline:auto;padding:0 24px;height:66px;display:flex;align-items:center;justify-content:space-between;}
+  .brand{display:flex;align-items:center;gap:10px;font-family:var(--font-display);font-weight:600;
+    font-size:1.25rem;color:var(--ink);border:0;}
+  .back{font-size:.9rem;font-weight:600;color:var(--ink);border-bottom:1px solid var(--line-2);}
+  .back:hover{color:var(--ember);border-color:var(--ember);}
+  main{max-width:760px;margin-inline:auto;padding:clamp(48px,8vw,84px) 24px 90px;}
+  .eyebrow{font-size:.74rem;font-weight:600;letter-spacing:.24em;text-transform:uppercase;color:var(--muted);}
+  h1{font-family:var(--font-display);font-weight:460;font-size:clamp(2.3rem,6vw,3.4rem);
+    line-height:1.05;letter-spacing:-.02em;margin:16px 0 10px;}
+  .meta{color:var(--muted);font-size:.92rem;font-family:var(--font-display);font-style:italic;margin:0 0 8px;}
+  h2{font-family:var(--font-display);font-weight:500;font-size:1.42rem;letter-spacing:-.01em;
+    margin:44px 0 12px;padding-top:28px;border-top:1px solid var(--line);}
+  p{margin:0 0 14px;color:var(--ink-2);}
+  ul{margin:0 0 14px;padding-left:22px;color:var(--ink-2);}
+  li{margin-bottom:6px;}
+  strong{color:var(--ink);font-weight:600;}
+  .callout{background:var(--paper-2);border-left:3px solid var(--ember);padding:18px 20px;margin:18px 0;border-radius:0 4px 4px 0;}
+  .callout ul{margin-bottom:0;}
+  .callout > strong:first-child{display:block;margin-bottom:8px;}
+  footer.site{border-top:1px solid var(--line);background:var(--paper-2);}
+  .foot{max-width:760px;margin-inline:auto;padding:28px 24px;display:flex;flex-wrap:wrap;gap:10px 26px;
+    justify-content:space-between;font-size:.86rem;color:var(--muted);}
+  .foot a{color:var(--ink);border-color:var(--line-2);}
+  .foot a:hover{color:var(--ember);border-color:var(--ember);}
+</style>
+</head>
+<body>
+<script>
+/* Land at the top on plain loads — stop the browser restoring a stale scroll offset. */
+(function(){
+  if(location.hash) return;
+  if('scrollRestoration' in history) history.scrollRestoration='manual';
+  function toTop(){ try{ window.scrollTo({top:0,left:0,behavior:'instant'}); }catch(e){ window.scrollTo(0,0); } }
+  toTop();
+  window.addEventListener('load', toTop);
+})();
+</script>
+
+<header class="site">
+  <div class="nav">
+    <a class="brand" href="index.html" aria-label="Autobook home">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="#BE4A22" aria-hidden="true"><path d="M12 2c1.6 4.5-1 5.5-1 8.2 0 1.1.85 1.85 1.85 1.85.8 0 1.35-.45 1.65-1.1C16 13.2 16.5 14.7 16.5 16A4.5 4.5 0 0 1 7.5 16c0-2.7 2-4 2.4-6.2.3-1.7-.1-3.4 2.1-7.8z"/></svg>
+      Autobook
+    </a>
+    <a class="back" href="index.html">&larr; Back to Autobook</a>
+  </div>
+</header>
+
+<main>
+  <span class="eyebrow">Legal</span>
+  <h1>Terms and Conditions</h1>
+  <p class="meta">Last updated: June 12, 2026</p>
+
+  <h2>1. Program Name and Description</h2>
+  <p><strong>Program Name:</strong> AutoBook — SMS Appointment Booking Service</p>
+  <p><strong>Program Description:</strong> AutoBook is an automated SMS-based appointment booking and lead qualification service for HVAC contractors, operated by Ryan Elmazidi. When you text our business phone number (+1 617-295-7190) to inquire about HVAC services (furnace repair, AC repair, heat pump service, boiler maintenance, etc.), our system responds with qualification questions and books service appointments directly into the contractor's calendar.</p>
+
+  <h2>2. Affirmative Express Consent</h2>
+  <div class="callout">
+    <strong>By texting +1 (617) 295-7190, you affirmatively consent to receive SMS messages from Ryan Elmazidi, doing business as AutoBook.</strong>
+    <p style="margin:0 0 8px;">You understand and agree that:</p>
+    <ul>
+      <li>You initiate contact by texting our business number first</li>
+      <li>By sending an SMS, you provide express consent to receive automated responses</li>
+      <li>You may receive up to 5 messages during the qualification and booking process</li>
+      <li>You may receive up to 3 follow-up messages over 72 hours if you do not complete a booking</li>
+      <li>We do not send unsolicited marketing — we only respond to inquiries you start</li>
+      <li>Consent is not a condition of any purchase</li>
+    </ul>
+  </div>
+
+  <h2>3. Message and Data Rates</h2>
+  <p><strong>Message and data rates may apply.</strong> Standard SMS rates vary by carrier and plan. AutoBook does not charge you for SMS delivery, but your carrier may. Check with your carrier for details.</p>
+
+  <h2>4. Message Frequency</h2>
+  <p><strong>Message frequency varies</strong> based on your interaction:</p>
+  <ul>
+    <li><strong>Initial conversation:</strong> up to 5 messages</li>
+    <li><strong>Follow-up sequence (if booking abandoned):</strong> up to 3 messages over 72 hours</li>
+    <li><strong>Appointment reminders:</strong> up to 1 message before your scheduled service</li>
+  </ul>
+
+  <h2>5. How to Opt Out</h2>
+  <p><strong>Reply STOP to any message to opt out.</strong> Once you reply STOP:</p>
+  <ul>
+    <li>You will receive a single confirmation message acknowledging your opt-out</li>
+    <li>You will not receive any further SMS messages from us</li>
+    <li>You can re-opt-in by texting us again at any time</li>
+  </ul>
+  <p><strong>Opt-out keyword:</strong> STOP<br />
+  <strong>Opt-out confirmation message:</strong> "You have successfully opted out of AutoBook messages. Reply START to re-opt-in, or contact tryautobook@gmail.com for assistance."</p>
+
+  <h2>6. How to Get Help</h2>
+  <p><strong>Reply HELP to any message for assistance.</strong></p>
+  <p><strong>Help keyword:</strong> HELP<br />
+  <strong>Help message:</strong> "AutoBook Support — For questions reply to this message, call +1 (617) 295-7190, or email tryautobook@gmail.com. To stop receiving messages, reply STOP."</p>
+
+  <h2>7. Support Contact Information</h2>
+  <ul>
+    <li><strong>SMS/Phone:</strong> +1 (617) 295-7190</li>
+    <li><strong>Email:</strong> <a href="mailto:tryautobook@gmail.com">tryautobook@gmail.com</a></li>
+  </ul>
+  <p>Support is available Monday–Friday, 9am–5pm Eastern Time.</p>
+
+  <h2>8. Pricing</h2>
+  <p>AutoBook is sold as a subscription service to HVAC contractors (not to end users texting in):</p>
+  <ul>
+    <li><strong>Setup Fee:</strong> $300 one-time, charged after the free trial if the contractor chooses to continue</li>
+    <li><strong>Monthly Fee:</strong> $297/month, recurring, cancellable anytime</li>
+    <li><strong>Free Trial:</strong> First 30 days free, no commitment</li>
+  </ul>
+  <p>End users who text in for HVAC service are never charged by AutoBook.</p>
+
+  <h2>9. Age Eligibility</h2>
+  <p>You must be at least 18 years old to use this service. By texting us, you represent that you meet this requirement.</p>
+
+  <h2>10. Acceptable Use</h2>
+  <p>This service is for legitimate HVAC service inquiries only. You agree not to use it for spam, harassment, vulnerability testing, automated/bulk messaging, or fraudulent inquiries. We reserve the right to block numbers that violate these restrictions.</p>
+
+  <h2>11. No Warranties</h2>
+  <p>AutoBook is provided "as is" without warranties of any kind. We do not guarantee uninterrupted, error-free service; that all messages will be delivered (carrier issues may cause delays); appointment availability; or a specific number of bookings.</p>
+
+  <h2>12. Limitation of Liability</h2>
+  <p>To the maximum extent permitted by law, Ryan Elmazidi (AutoBook) shall not be liable for any indirect, incidental, special, consequential, or punitive damages arising from your use of this service.</p>
+
+  <h2>13. Governing Law</h2>
+  <p>These Terms are governed by the laws of the Commonwealth of Massachusetts, United States, without regard to its conflict of law principles.</p>
+
+  <h2>14. Changes to These Terms</h2>
+  <p>We may update these Terms at any time. Updates are effective when posted at this URL. Your continued use after changes are posted constitutes acceptance.</p>
+
+  <h2>15. Privacy</h2>
+  <p>Your use of this service is also governed by our <a href="privacy.html">Privacy Policy</a>. Please review it to understand our data practices.</p>
+
+  <h2>16. Contact Us</h2>
+  <ul>
+    <li><strong>Phone:</strong> +1 (617) 295-7190</li>
+    <li><strong>Email:</strong> <a href="mailto:tryautobook@gmail.com">tryautobook@gmail.com</a></li>
+  </ul>
+</main>
+
+<footer class="site">
+  <div class="foot">
+    <span>© 2026 Autobook. All rights reserved.</span>
+    <span><a href="index.html">Home</a> &nbsp;·&nbsp; <a href="privacy.html">Privacy Policy</a></span>
+  </div>
+</footer>
+
+</body>
+</html>
