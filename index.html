@@ -8,9 +8,14 @@
 <meta name="theme-color" content="#FBF9F4" />
 
 <meta property="og:type" content="website" />
+<meta property="og:url" content="https://autobook2026.github.io/" />
 <meta property="og:title" content="Autobook — Stop sending your customers to voicemail" />
 <meta property="og:description" content="A 24/7 AI receptionist for small HVAC shops. Answers calls and texts in seconds, qualifies the job, and books it straight to your calendar." />
-<meta name="twitter:card" content="summary" />
+<meta property="og:image" content="https://autobook2026.github.io/og.png" />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:image" content="https://autobook2026.github.io/og.png" />
 
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23FBF9F4'/%3E%3Crect x='1.5' y='1.5' width='61' height='61' rx='12.5' fill='none' stroke='%231C1A16' stroke-opacity='.16'/%3E%3Cpath d='M32 13c4 9-2.5 11-2.5 16.5 0 2.2 1.7 3.7 3.7 3.7 1.6 0 2.7-.9 3.3-2.2C39 33.5 40 36 40 38.5A8 8 0 0 1 24 38.5c0-5.5 4-8 4.8-12.5.6-3.4-.2-6.7 3.2-13z' fill='%23BE4A22'/%3E%3C/svg%3E" />
 
@@ -300,6 +305,28 @@
   .feat p{margin-top:10px;color:var(--muted);font-size:1.02rem;line-height:1.55;}
   .feat .ix{position:absolute;top:clamp(30px,3vw,42px);right:clamp(26px,2.6vw,38px);
     font-family:var(--font-display);font-weight:400;color:var(--line-2);font-size:1.2rem;font-variant-numeric:tabular-nums;}
+
+  /* FOUNDER — straight-talk letter + the deal */
+  .founder-grid{display:grid;grid-template-columns:1fr;gap:clamp(30px,4vw,54px);margin-top:clamp(40px,4.5vw,60px);}
+  .letter{max-width:60ch;}
+  .letter p{color:var(--ink-2);font-size:clamp(1.06rem,1.4vw,1.18rem);line-height:1.7;margin:0 0 20px;}
+  .letter p b{color:var(--ink);font-weight:600;}
+  .letter .sig{margin-top:30px;font-family:var(--font-display);font-style:italic;font-size:1.25rem;color:var(--ink);}
+  .letter .sig small{display:block;font-family:var(--font-body);font-style:normal;font-size:.78rem;
+    font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);margin-top:8px;}
+  .deal{display:grid;grid-template-columns:1fr;border-top:1px solid var(--line);}
+  .deal-item{padding:clamp(26px,3vw,36px) 0;border-bottom:1px solid var(--line);}
+  .deal-item .dv{font-family:var(--font-display);font-weight:420;font-size:clamp(2rem,3.6vw,2.9rem);
+    color:var(--ink);letter-spacing:-.02em;line-height:1;}
+  .deal-item .dv .small{font-size:.42em;color:var(--ember);font-weight:500;}
+  .deal-item .dl{margin-top:12px;color:var(--muted);font-size:.99rem;max-width:30ch;line-height:1.5;}
+  .deal-item .dl b{color:var(--ink);font-weight:600;}
+  @media (min-width:760px){
+    .deal{grid-template-columns:repeat(3,1fr);border-bottom:1px solid var(--line);}
+    .deal-item{border-bottom:0;padding:clamp(26px,3vw,36px) clamp(24px,2.6vw,40px);}
+    .deal-item{border-left:1px solid var(--line);}
+    .deal-item:first-child{border-left:0;padding-left:0;}
+  }
 
   /* FINAL */
   .final .inner{max-width:760px;}
@@ -624,11 +651,45 @@
     </div>
   </section>
 
-  <!-- 7. FINAL CTA -->
+  <!-- 7. FOUNDER / THE DEAL -->
+  <section class="founder rule" id="deal">
+    <div class="container">
+      <div class="sec-head">
+        <div>
+          <span class="eyebrow reveal"><span class="no">04</span> Straight talk</span>
+          <h2 class="reveal" style="--d:.06s">New company. Old-fashioned deal.</h2>
+        </div>
+        <p class="sec-sub reveal" style="--d:.12s">No wall of client logos here — yet. So the terms put the risk on us, not you.</p>
+      </div>
+      <div class="founder-grid">
+        <div class="letter reveal" style="--d:.08s">
+          <p>Autobook is new, and I won't pretend otherwise. I'm Ryan — I built the system, I run the company, and I'm the one who sets it up for your shop personally.</p>
+          <p>That's why the deal is simple: <b>run Autobook free for two weeks.</b> If it doesn't catch calls you'd have missed, walk away and you owe nothing. If it does, it's a flat monthly rate — about the margin on one recovered service call.</p>
+          <div class="sig">— Ryan Elmazidi<small>Founder, Autobook</small></div>
+        </div>
+        <div class="deal reveal" style="--d:.14s">
+          <div class="deal-item">
+            <div class="dv">14 <span class="small">days free</span></div>
+            <p class="dl"><b>Full trial, setup included.</b> Autobook answers your real calls and texts for two weeks.</p>
+          </div>
+          <div class="deal-item">
+            <div class="dv">$297 <span class="small">/month</span></div>
+            <p class="dl"><b>Flat rate after the trial,</b> plus a one-time $300 setup. No per-call fees, no surprises.</p>
+          </div>
+          <div class="deal-item">
+            <div class="dv">0 <span class="small">contracts</span></div>
+            <p class="dl"><b>Cancel anytime</b> with an email. Your number and your customers stay yours.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 8. FINAL CTA -->
   <section class="final rule" id="book">
     <div class="container">
       <div class="inner">
-        <span class="eyebrow reveal"><span class="no">04</span> Get started</span>
+        <span class="eyebrow reveal"><span class="no">05</span> Get started</span>
         <h2 class="reveal" style="--d:.06s">Book a 10-minute demo.</h2>
         <p class="reveal" style="--d:.12s">See exactly how Autobook would answer your calls and fill your calendar. Bring a real after-hours scenario and watch it book the job.</p>
         <div class="final-actions reveal" style="--d:.18s">
