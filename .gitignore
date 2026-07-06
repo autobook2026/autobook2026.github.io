@@ -1,2 +1,4 @@
 .DS_Store
-assets/
+# unused hero image drafts — keep out of the deployed site
+assets/*.jpg
+assets/*.webp
