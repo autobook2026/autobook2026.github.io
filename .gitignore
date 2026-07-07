@@ -2,3 +2,6 @@
 # unused hero image drafts — keep out of the deployed site
 assets/*.jpg
 assets/*.webp
+
+# internal planning docs — keep local, do not deploy publicly
+docs/
