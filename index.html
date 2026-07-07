@@ -295,6 +295,8 @@
   .try p .num{color:var(--paper);font-weight:600;white-space:nowrap;font-family:var(--font-display);font-style:italic;}
   .try .btn{margin-top:38px;}
   .try .note{margin-top:18px;color:var(--paper-muted);font-size:.94rem;}
+  .try .note a{color:var(--paper);text-decoration:underline;text-underline-offset:2px;text-decoration-thickness:1px;transition:color .2s var(--ease);}
+  .try .note a:hover{color:var(--ember);}
 
   /* WHY / features */
   .feat-grid{display:grid;grid-template-columns:1fr;gap:0;margin-top:clamp(48px,5vw,74px);
@@ -626,9 +628,9 @@
     <div class="container">
       <span class="eyebrow center reveal">Try it now</span>
       <h2 class="reveal" style="--d:.06s">See it answer a phone right now.</h2>
-      <p class="reveal" style="--d:.12s">Text DEMO to <span class="num">(617) 295-7190</span> and watch it book an appointment in under a minute.</p>
-      <a class="btn btn-invert btn-lg reveal" style="--d:.18s" href="sms:+16172957190?&body=DEMO">Text DEMO to (617) 295-7190</a>
-      <p class="note reveal" style="--d:.24s">No download, no signup — just a text.</p>
+      <p class="reveal" style="--d:.12s">Call <span class="num">(617) 295-7190</span> and watch it answer, qualify the job, and book an appointment in under a minute.</p>
+      <a class="btn btn-invert btn-lg reveal" style="--d:.18s" href="tel:+16172957190">Call (617) 295-7190</a>
+      <p class="note reveal" style="--d:.24s">No download, no signup — just a call. Prefer to text? <a href="sms:+16172957190?&body=DEMO">Text DEMO instead</a>.</p>
     </div>
   </section>
 
@@ -908,7 +910,7 @@
   }
   function userSay(text){ show(bubbleEl('customer', text)); }
 
-  var END_CHIPS=[{label:'Start over'},{label:'Text the real demo',href:'sms:+16172957190?&body=DEMO'}];
+  var END_CHIPS=[{label:'Start over'},{label:'Call the real number',href:'tel:+16172957190'},{label:'Text DEMO instead',href:'sms:+16172957190?&body=DEMO'}];
 
   async function restart(){
     slots={}; state='opening';
@@ -955,13 +957,13 @@
       var t2=parseTime(text);
       slots.time=t2?fmt(t2):text.trim();
       await botSay("You're all set, "+(slots.name||'friend')+" — booked for "+(slots.day||'that day')+" at "+slots.time+". You'll get a reminder text before we arrive.");
-      await botSay("That's the whole flow — under a minute. Want the real thing? Text DEMO to (617) 295-7190.",
-        'That’s the whole flow — under a minute. Want the real thing? Text <a href="sms:+16172957190?&body=DEMO">DEMO to (617) 295‑7190</a>.');
+      await botSay("That's the whole flow — under a minute. Want the real thing? Call (617) 295-7190.",
+        'That’s the whole flow — under a minute. Want the real thing? <a href="tel:+16172957190">Call (617) 295‑7190</a>.');
       state='done'; setChips(END_CHIPS);
     } else { /* done */
       if(/start|again|restart|over/i.test(text)){ await restart(); }
       else {
-        await botSay("This run is wrapped — tap “Start over” to go again, or text DEMO to (617) 295-7190 for the real thing.");
+        await botSay("This run is wrapped — tap “Start over” to go again, or call (617) 295-7190 for the real thing.");
         setChips(END_CHIPS);
       }
     }
